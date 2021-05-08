@@ -15,7 +15,9 @@ import os
 from os.path import abspath, basename, dirname, join, normpath
 import sys
 from sys import path
-
+import environ
+env = environ.Env()
+environ.Env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 root = lambda *x: os.path.join(BASE_DIR, *x)
@@ -56,6 +58,14 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+EMAIL_BACKEND = 'django_ses.SESBackend'
+
+AWS_SES_REGION_NAME = 'us-east-1'
+AWS_SES_REGION_ENDPOINT = 'email.us-east-1.amazonaws.com'
+SERVER_EMAIL = 'aditnegi1@gmail.com'
+
+
+
 # Application definition
 LOCAL_APPS = ['alerts', 'users']
 INSTALLED_APPS = [
@@ -65,6 +75,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions'
 ]+LOCAL_APPS
 
 MIDDLEWARE = [
