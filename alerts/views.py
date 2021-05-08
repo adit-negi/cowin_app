@@ -9,7 +9,7 @@ def register_visitors(request):
     if request.method == 'POST':
         data = request.POST.dict()
         try:
-            Visitors.objects.create(**data)
+            Visitors.objects.get_or_create(**data)
             return HttpResponse(200)
         except:
             return HttpResponse(400)
