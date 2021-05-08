@@ -76,8 +76,13 @@ def cron_bot():
 
 
 
-def universal_mailer_function(subject, to, var1, bcc=[], from_email=settings.SERVER_EMAIL):
+def universal_mailer_function(subject, pincode, bcc=['aditnegi1@gmail.com'], from_email=settings.SERVER_EMAIL):
     text_content = subject
+    date_threshold = datetime.now()-timedelta(hours=6)
+    query_set = Visitor.objects.filter(pincode = pincode, last_sent__lte = date_threshold)
+    update = {'last_sent':datetime.now()}
+    query_set.update(**update)
+    to = list(set(list(query_set.values_list('email', flat=True))))
     msg = EmailMultiAlternatives(subject, text_content, from_email, to, bcc)
 
     html_file = 'mailer/test.html'
