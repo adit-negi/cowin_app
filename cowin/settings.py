@@ -172,5 +172,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-#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
