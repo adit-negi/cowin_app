@@ -7,7 +7,9 @@ def home(request):
 
 def register_visitors(request):
     if request.method == 'POST':
+        print(request.POST)
         data = request.POST.dict()
+        print(data)
         try:
             Visitors.objects.get_or_create(**data)
             return HttpResponse(200)
