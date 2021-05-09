@@ -9,26 +9,6 @@ from django.template import Context
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives, EmailMessage
 
-def send_mail(subject, name, pincode):
-    email_list = list(Visitor.objects.all().values_list('email', flat=True))
-    sender = 'your-email'
-    s = smtplib.SMTP('smtp.gmail.com', 587)
-  
-    # start TLS for security
-    s.starttls()
-    print('here')
-    
-    # Authentication
-    s.login("your-email", "your-password")
-    
-    # message to be sent
-    message = subject + " "+ name
-    
-    # sending the mail
-    s.sendmail("your-email", "sender-email", message)
-    
-    # terminating the session
-    s.quit()
 
 #Dates to start search, passed via query parameters
 def get_dates(date):
@@ -47,11 +27,12 @@ def get_dates(date):
     date2 = day2+'-'+ month2+str(year2)
     return date2
 
-headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+
 
 
 def cron_bot():
-    
+
+    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
     pincodes = list(set(list(Visitor.objects.all().values_list('pincode', flat=True))))
     
     while True:
@@ -66,7 +47,7 @@ def cron_bot():
                     for center in response_json['centers']:
                         for session in center['sessions']:
                             if session['available_capacity']>0 and session['min_age_limit']==18:
-                                send_mail('Vaccine Slot Open Now', center['name'], pincode)
+                                universal_mailer_function('Vaccine Slot Open Now', '110075',center['name'])
                 except:
                     continue
             
@@ -76,7 +57,7 @@ def cron_bot():
 
 
 
-def universal_mailer_function(subject, pincode, bcc=['aditnegi1@gmail.com'], from_email=settings.SERVER_EMAIL):
+def universal_mailer_function(subject, pincode, var1,bcc=['aditnegi1@gmail.com'], from_email=settings.SERVER_EMAIL):
     text_content = subject
     date_threshold = datetime.now()-timedelta(hours=6)
     query_set = Visitor.objects.filter(pincode = pincode, last_sent__lte = date_threshold)
@@ -87,12 +68,7 @@ def universal_mailer_function(subject, pincode, bcc=['aditnegi1@gmail.com'], fro
 
     html_file = 'mailer/test.html'
 
-    html_content = render_to_string(html_file, {})
+    html_content = render_to_string(html_file, {'center':var1})
     msg.attach_alternative(html_content, "text/html")
     msg.send()
 
-'''
-
-SMTP Username: AKIASP24SE5XWFTFMW2M
-SMTP Password: BGUfUgkVl4p+QznUidVabBX7rmMFDjo1pY+vv+FYXTy2
-'''

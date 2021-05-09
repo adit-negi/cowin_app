@@ -55,14 +55,14 @@ SECRET_KEY = 'django-insecure-_eeu-kf%chcd+w#wa-nx@37(@2ks4%m2qdw%uwm7lpm5&&=w7h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '54.159.10.134']
 
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
 
 AWS_SES_REGION_NAME = 'us-east-1'
 AWS_SES_REGION_ENDPOINT = 'email.us-east-1.amazonaws.com'
-SERVER_EMAIL = 'aditnegi1@gmail.com'
+SERVER_EMAIL = 'aditnegi8899@gmail.com'
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 
