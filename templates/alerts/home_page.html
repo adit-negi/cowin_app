@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+      {%load static%}
+  	<title>Cowin Bot</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+	</head>
+    <h1 style='text-align: center; margin-top: 10px;'>COWIN BOT</h1>
+	<body style="background-color:#bcdce8;">
+	<section >
+		<div class="container">
+			<div class="row justify-content-center">
+                <p style='text-align: center; color: black;'>Give us your pincode and email get instant notifications when a vaccine slot opens near you</p><br>
+                
+                
+			</div>
+            <p style='text-align: center; color: black;'>Maintained by <a href='https://www.linkedin.com/in/adit-negi-484488157/' style='color: red'>Adit Negi</a>,
+            <a href='https://www.linkedin.com/in/shreyansh-singh-25b18054/' style='color: red'>Shreyansh Singh</a>,
+            <a href='https://www.linkedin.com/in/shivam23rawat/' style='color: red'>Shivam Rawat</a> </p>
+			<div class="row justify-content-center">
+				<div class="col-lg-10">
+					<div class="wrapper">
+						<div class="row no-gutters">
+							<div class="col-md-6 d-flex align-items-stretch">
+								<div class="contact-wrap w-100 p-md-5 p-4 py-5">
+									<h3 class="mb-4">Register Now</h3>
+									<div id="form-message-warning" class="mb-4"></div> 
+				      		<div id="form-message-success" class="mb-4">
+				            Your message was sent, thank you!
+				      		</div>
+									<form method="POST" id="formElem" name="contactForm" class="contactForm" action="/api/v1/register-user-details" method="POST">
+                                        {% csrf_token %} 
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<input type="text" class="form-control" name="name" id="name" placeholder="Name" required>
+												</div>
+											</div>
+											<div class="col-md-12"> 
+												<div class="form-group">
+													<input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+												</div>
+											</div>
+											<div class="col-md-12">
+												<div class="form-group">
+													<input type="text" class="form-control" name="phone" id="phone" placeholder="Phone">
+												</div>
+											</div>
+											<div class="col-md-12">
+												<div class="form-group">
+													<input name="age" class="form-control" id="age" cols="30" rows="6" placeholder="Age" required></input>
+												</div>
+											</div>
+                                            <div class="col-md-12">
+												<div class="form-group">
+													<input type="text" class="form-control" name="pincode" id="pin" placeholder="Pincode" required>
+												</div>
+											</div>
+											<div class="col-md-12">
+												<div class="form-group">
+													<input type="submit" class="btn btn-primary">
+													<div class="submitting"></div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+							<div class="col-md-6 d-flex align-items-stretch">
+								<div class="info-wrap w-100 p-md-5 p-4 py-5 img">
+									<h3>Contact information</h3>
+									<p class="mb-4">We're open for any suggestion or just to have a chat</p>
+				        	<div class="dbox w-100 d-flex align-items-start">
+				        		<div class="icon d-flex align-items-center justify-content-center">
+				        			<span class="fa fa-map-marker"></span>
+				        		</div>
+				        		<div class="text pl-3">
+                                    <p><span>GitHub Repo:</span> <a href="https://github.com/adit-negi/cowin_app">cowin_app</a></p>
+					          </div>
+				          </div>
+				        	<div class="dbox w-100 d-flex align-items-center">
+				        		<div class="icon d-flex align-items-center justify-content-center">
+				        			<span class="fa fa-phone"></span>
+				        		</div>
+				        		<div class="text pl-3">
+					            <p><span>Phone:</span> <a href="tel://9650691551">+ 91 9650691551</a></p>
+					          </div>
+				          </div>
+				        	<div class="dbox w-100 d-flex align-items-center">
+				        		<div class="icon d-flex align-items-center justify-content-center">
+				        			<span class="fa fa-paper-plane"></span>
+				        		</div>
+				        		<div class="text pl-3">
+					            <p><span>Email:</span> <a href="mailto:aditnegi1@gmail.com">aditnegi1@gmail.com</a></p>
+					          </div>
+				          </div>
+				        	<div class="dbox w-100 d-flex align-items-center">
+				        		<div class="icon d-flex align-items-center justify-content-center">
+				        			<span class="fa fa-globe"></span>
+				        		</div>
+				        		<div class="text pl-3">
+					            <p><span>Website</span> <a href="https://www.aditnegi.com">aditnegi.com</a></p>
+					          </div>
+				          </div>
+                          
+			          </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+<script>
+
+
+formElem.onsubmit = async (e) => {
+        e.preventDefault();
+        var form = document.querySelector("#formElem");
+        let csrftoken = getCookie('csrftoken');
+        const formData = new URLSearchParams();
+        formData.append('name', form.querySelector('input[name="name"]').value);
+        formData.append('phone', form.querySelector('input[name="phone"]').value);
+        formData.append('email', form.querySelector('input[name="email"]').value);
+        formData.append('pincode', form.querySelector('input[name="pincode"]').value);
+
+        // data = {
+        //   name : form.querySelector('input[name="name"]').value,
+        //   phone : form.querySelector('input[name="phone"]').value,
+        //   email : form.querySelector('input[name="email"]').value,
+        //   pincode : form.querySelector('input[name="pin"]').value,
+        //   csrfmiddlewaretoken: csrftoken,
+        // }
+        console.log(formData);
+        let response = await fetch('/api/v1/register-user-details', {
+                method: 'POST', 
+                headers: {
+                    "X-CSRFToken": csrftoken,
+                    "Content-Type": 'application/x-www-form-urlencoded;charset=UTF-8'
+                },
+                body: formData.toString(),
+        })
+
+        let text = await response.text();
+        console.log(text);
+        if (text === '200'){
+            window.alert("Request has been sent successfully");
+        }
+        if (text === '403'){
+            window.alert("You are already registered for an alert, chill.");
+        }
+        if (text === '400'){
+            window.alert("Looks like the server is swamped, or you details are invalid please try again later.");
+        }
+    };
+
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+    
+    </script> 
+
+
+	</body>
+</html>
+

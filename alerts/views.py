@@ -4,7 +4,7 @@ from .models import *
 import json
 # Create your views here.
 def home(request):
-    return render(request,'alerts/home.html', {})
+    return render(request,'alerts/home_page.html', {})
 
 def register_visitors(request):
     if request.method == 'POST':
@@ -13,7 +13,7 @@ def register_visitors(request):
   
         obj, created = Visitor.objects.get_or_create(**data)
         if not created:
-            return HttpResponse(400, "Already in database")
+            return HttpResponse(403, "Already in database")
         return HttpResponse(200)
        
     return HttpResponse(400)
