@@ -9,18 +9,46 @@
 <body>
 <h1>App Name</h1>
 <br>
-<form action="/api/v1/register-user-details" method="post">
-    <label for="name">Name:</label><br>
+    <form id="formElem">
+    <label>Name:</label><br>
     <input type="text" name="name"><br>
-    <label for="phone">Phone:</label><br>
+    <label>Phone:</label><br>
     <input type="text" name="phone"><br>
-    <label for="email">E-mail:</label><br>
+    <label>E-mail:</label><br>
     <input type="text" name="email"><br>
-    <label for="pin">Pincode:</label><br>
+    <label>Pincode:</label><br>
     <input type="text" name="pin"><br>
-    <input type="submit" value="Submit"><br>
+    <input type="submit"><br>
   </form>
+  <div id="test"></div>
  
-<script src="home.js"></script> 
+<script>
+
+
+formElem.onsubmit = async (e) => {
+      e.preventDefault();
+      var form = document.querySelector("#formElem");
+
+        data = {
+          name : form.querySelector('input[name="name"]').value,
+          phone : form.querySelector('input[name="phone"]').value,
+          email : form.querySelector('input[name="email"]').value,
+          pincode : form.querySelector('input[name="pin"]').value,
+          
+        }
+
+        let response = await fetch('http://127.0.0.1:8000/api/v1/register-user-details', {
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+        })
+
+        let text = await response.text();
+        document.querySelector("#test").innerHTML = text;
+    };
+
+</script> 
 </body>
 </html>
