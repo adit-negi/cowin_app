@@ -46,8 +46,10 @@ def cron_bot():
                     response_json = json.loads(response.text)
                     for center in response_json['centers']:
                         for session in center['sessions']:
-                            if session['available_capacity']>0 and session['min_age_limit']==18:
-                                universal_mailer_function('Vaccine Slot Open Now', '110075',center['name'])
+                            if session['available_capacity']>0 and session['min_age_limit']>=18:
+                                print('here')
+                                universal_mailer_function('Vaccine Slot Open Now', pincode,center['name'])
+                                break
                 except:
                     continue
             
@@ -58,13 +60,18 @@ def cron_bot():
 
 
 def universal_mailer_function(subject, pincode, var1,bcc=['aditnegi1@gmail.com'], from_email=settings.SERVER_EMAIL):
+    print('inside mailer')
     text_content = subject
-    date_threshold = datetime.now()-timedelta(hours=6)
-    query_set = Visitor.objects.filter(pincode = pincode, last_sent__lte = date_threshold)
+    date_threshold = datetime.now()-timedelta(hours=24)
+    query_set = Visitor.objects.filter(pincode = pincode, last_sent__lte = date_threshold) | Visitor.objects.filter(pincode = pincode,last_sent__isnull=True)
+    
+    to = list(set(list(query_set.values_list('email', flat=True))))
     update = {'last_sent':datetime.now()}
     query_set.update(**update)
-    to = list(set(list(query_set.values_list('email', flat=True))))
-    send_mail('Vaccine Slot open now', 'Slot open at center'+var1, 'aditnegi8899@gmail.com', to, fail_silently=False)
+    if 'aditnegi1@gmail.com' not in to and to!=[]:
+        to.append('aditnegi1@gmail.com')
+    print(to)
+    send_mail('Vaccine Slot open now', 'Slot open at center'+var1, 'aditnegi8899@gmail.com', to,fail_silently=False)
     # msg = EmailMultiAlternatives(subject, text_content, from_email, to, bcc)
 
     # html_file = 'mailer/test.html'
