@@ -1,2 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {%load static%}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <title>Cowin</title>
+    </head>
+<body>
+<h1 class="app">App Name</h1>
+<br>
+    <form id="formElem">
+    <label>Name:</label><br>
+    <input type="text" name="name" required><br>
+    <label>Phone:</label><br>
+    <input type="text" name="phone"><br>
+    <label>E-mail:</label><br>
+    <input type="text" name="email" required><br>
+    <label>Pincode:</label><br>
+    <input type="text" name="pin" required><br>
+    <input type="submit"><br>
+  </form>
+  <div id="test"></div>
+ 
+<script>
 
-<h1>Home<h1>
+
+formElem.onsubmit = async (e) => {
+      e.preventDefault();
+      var form = document.querySelector("#formElem");
+
+        data = {
+          name : form.querySelector('input[name="name"]').value,
+          phone : form.querySelector('input[name="phone"]').value,
+          email : form.querySelector('input[name="email"]').value,
+          pincode : form.querySelector('input[name="pin"]').value,
+          
+        }
+
+        let response = await fetch('http://127.0.0.1:8000/api/v1/register-user-details', {
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+        })
+
+        let text = await response.text();
+        document.querySelector("#test").innerHTML = text;
+    };
+
+</script> 
+</body>
+</html>
