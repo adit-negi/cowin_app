@@ -16,3 +16,5 @@ class Visitor(models.Model):
         db_table = "visitor"
         verbose_name = 'Visitor'
         verbose_name_plural = "Visitors"
+
+#cowin_bot_production
