@@ -7,6 +7,7 @@ class Visitor(models.Model):
     email = models.EmailField(blank =True, null=True)
     pincode = models.CharField(max_length=200, blank=True, null=True)
     age = models.IntegerField(null=True, blank=True)
+    last_sent = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -15,3 +16,5 @@ class Visitor(models.Model):
         db_table = "visitor"
         verbose_name = 'Visitor'
         verbose_name_plural = "Visitors"
+
+#cowin_bot_production
