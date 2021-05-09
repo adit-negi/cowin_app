@@ -20,3 +20,5 @@ urlpatterns = [
     path('', include('alerts.urls')),
     path('admin/', admin.site.urls),
 ]
+
+
