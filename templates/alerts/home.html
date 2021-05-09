@@ -11,7 +11,8 @@
 <body>
 <h1 class="app">App Name</h1>
 <br>
-    <form id="formElem">
+  <form id="formElem" action="/api/v1/register-user-details" method="POST">
+    {% csrf_token %} 
     <label>Name:</label><br>
     <input type="text" name="name" required><br>
     <label>Phone:</label><br>
@@ -22,29 +23,36 @@
     <input type="text" name="pin" required><br>
     <input type="submit"><br>
   </form>
-  <div id="test"></div>
+  <div id="test" value="OK"></div>
  
 <script>
 
 
 formElem.onsubmit = async (e) => {
-      e.preventDefault();
-      var form = document.querySelector("#formElem");
-      let csrftoken = getCookie('csrftoken');
-        data = {
-          name : form.querySelector('input[name="name"]').value,
-          phone : form.querySelector('input[name="phone"]').value,
-          email : form.querySelector('input[name="email"]').value,
-          pincode : form.querySelector('input[name="pin"]').value,
-          csrfmiddlewaretoken: csrftoken,
-        }
-        console.log(data);
-        let response = await fetch('http://127.0.0.1:8000/api/v1/register-user-details', {
+        e.preventDefault();
+        var form = document.querySelector("#formElem");
+        let csrftoken = getCookie('csrftoken');
+        const formData = new URLSearchParams();
+        formData.append('name', form.querySelector('input[name="name"]').value);
+        formData.append('phone', form.querySelector('input[name="phone"]').value);
+        formData.append('email', form.querySelector('input[name="email"]').value);
+        formData.append('pincode', form.querySelector('input[name="pin"]').value);
+
+        // data = {
+        //   name : form.querySelector('input[name="name"]').value,
+        //   phone : form.querySelector('input[name="phone"]').value,
+        //   email : form.querySelector('input[name="email"]').value,
+        //   pincode : form.querySelector('input[name="pin"]').value,
+        //   csrfmiddlewaretoken: csrftoken,
+        // }
+        console.log(formData);
+        let response = await fetch('/api/v1/register-user-details', {
                 method: 'POST', 
                 headers: {
-                    "X-CSRFToken": csrftoken 
+                    "X-CSRFToken": csrftoken,
+                    "Content-Type": 'application/x-www-form-urlencoded;charset=UTF-8'
                 },
-                data: JSON.stringify(data),
+                body: formData.toString(),
         })
 
         let text = await response.text();
