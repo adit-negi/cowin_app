@@ -7,7 +7,7 @@ from .models import *
 from django.conf import settings
 from django.template import Context
 from django.template.loader import render_to_string
-from django.core.mail import EmailMultiAlternatives, EmailMessage
+from django.core.mail import EmailMultiAlternatives, EmailMessage, send_mail
 
 
 #Dates to start search, passed via query parameters
@@ -64,11 +64,12 @@ def universal_mailer_function(subject, pincode, var1,bcc=['aditnegi1@gmail.com']
     update = {'last_sent':datetime.now()}
     query_set.update(**update)
     to = list(set(list(query_set.values_list('email', flat=True))))
-    msg = EmailMultiAlternatives(subject, text_content, from_email, to, bcc)
+    send_mail('Vaccine Slot open now', 'Slot open at center'+var1, 'aditnegi8899@gmail.com', to, fail_silently=False)
+    # msg = EmailMultiAlternatives(subject, text_content, from_email, to, bcc)
 
-    html_file = 'mailer/test.html'
+    # html_file = 'mailer/test.html'
 
-    html_content = render_to_string(html_file, {'center':var1})
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
+    # html_content = render_to_string(html_file, {'center':var1})
+    # msg.attach_alternative(html_content, "text/html")
+    # msg.send()
 
