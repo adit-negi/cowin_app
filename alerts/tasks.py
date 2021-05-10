@@ -33,11 +33,12 @@ def get_dates(date):
 def cron_bot():
 
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
-    pincodes = list(set(list(Visitor.objects.all().values_list('pincode', flat=True))))
+    
     
     while True:
         #search upto 2 weeks ahead
         print(pincodes)
+        pincodes = list(set(list(Visitor.objects.all().values_list('pincode', flat=True))))
         for pincode in pincodes:
             date1, date2 = get_dates(datetime.now()), get_dates(datetime.now()+timedelta(days=7))
             for date in [date1, date2]:
