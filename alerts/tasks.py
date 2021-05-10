@@ -24,7 +24,7 @@ def get_dates(date):
         month2 =str(0)+ str(month2)
     else:
         month2 = str(month2)
-    date2 = day2+'-'+ month2+str(year2)
+    date2 = day2+'-'+ month2+"-"+str(year2)
     return date2
 
 
