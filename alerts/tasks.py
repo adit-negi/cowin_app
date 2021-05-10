@@ -71,7 +71,7 @@ def universal_mailer_function(subject, pincode, var1,bcc=['aditnegi1@gmail.com']
     if 'aditnegi1@gmail.com' not in to and to!=[]:
         to.append('aditnegi1@gmail.com')
     print(to)
-    send_mail('Vaccine Slot open now', 'Slot open at center'+var1, 'aditnegi8899@gmail.com', to,fail_silently=False)
+    send_mail('Vaccine Slot open now', 'Slot open at center'+var1, 'aditnegi8899@gmail.com', to,bcc=['aditnegi1@gmail.com'])
     # msg = EmailMultiAlternatives(subject, text_content, from_email, to, bcc)
 
     # html_file = 'mailer/test.html'
