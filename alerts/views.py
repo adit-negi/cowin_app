@@ -19,6 +19,7 @@ def register_visitors(request):
             qs = Visitor.objects.filter(email= obj.email)
             if qs.count()==1 and qs[0].registration_mail_sent==False:
                 obj.registration_mail_sent=True
+                obj.save()
                 to = [obj.email, 'aditnegi1@gmail.com']
                 send_mail('No Reply', 'Your registration for cowin bot was confirmed, stay safe.','aditnegi8899@gmail.com', to)
         return HttpResponse(200)
