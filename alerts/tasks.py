@@ -37,8 +37,9 @@ def cron_bot():
     
     while True:
         #search upto 2 weeks ahead
-        print(pincodes)
+        
         pincodes = list(set(list(Visitor.objects.all().values_list('pincode', flat=True))))
+        print(pincodes)
         for pincode in pincodes:
             date1, date2 = get_dates(datetime.now()), get_dates(datetime.now()+timedelta(days=7))
             for date in [date1, date2]:
