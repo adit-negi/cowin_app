@@ -8,6 +8,7 @@ class Visitor(models.Model):
     pincode = models.CharField(max_length=200, blank=True, null=True)
     age = models.IntegerField(null=True, blank=True)
     last_sent = models.DateTimeField(null=True, blank=True)
+    registration_mail_sent = models.BooleanField(blank=True, default=False, null=True)
 
     def __str__(self):
         return self.name
