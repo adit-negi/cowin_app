@@ -9,6 +9,7 @@ from django.template import Context
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives, EmailMessage, send_mail
 import numpy as np
+import cloudscraper
 
 def get_random_ua():
     random_ua = ''
@@ -71,18 +72,18 @@ def cron_bot():
         for pincode in pincodes:
             date1, date2 = get_dates(datetime.now()), get_dates(datetime.now()+timedelta(days=7))
             for date in [date1, date2]:
+                scraper = cloudscraper.create_scraper()  # returns a CloudScraper instance
                 
-                response =requests.get('https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode='+ pincode + '&date='+date, 
-                    headers = headers)
-                print(response.text)
+                response =scraper.get('https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode='+ pincode + '&date='+date)
+                print(response)
                 response_json = json.loads(response.text)
                 for center in response_json['centers']:
-                    print(center['center_id'])
                     for session in center['sessions']:
                         if session['available_capacity']>0 and session['min_age_limit']==18:
                             print('here')
                             universal_mailer_function('Vaccine Slot Open Now', pincode,center['name'])
                             break
+                time.sleep(5)
                 
             
                 #lets not throttle a govt site it hangs by a thread anyways
