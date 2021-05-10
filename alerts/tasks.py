@@ -43,19 +43,18 @@ def cron_bot():
         for pincode in pincodes:
             date1, date2 = get_dates(datetime.now()), get_dates(datetime.now()+timedelta(days=7))
             for date in [date1, date2]:
-                try:
-                    response =requests.get('https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode='+ pincode + '&date='+date, 
-                        headers = headers)
-                    response_json = json.loads(response.text)
-                    for center in response_json['centers']:
-                        print(center['center_id'])
-                        for session in center['sessions']:
-                            if session['available_capacity']>0 and session['min_age_limit']==18:
-                                print('here')
-                                universal_mailer_function('Vaccine Slot Open Now', pincode,center['name'])
-                                break
-                except:
-                    continue
+                
+                response =requests.get('https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode='+ pincode + '&date='+date, 
+                    headers = headers)
+                response_json = json.loads(response.text)
+                for center in response_json['centers']:
+                    print(center['center_id'])
+                    for session in center['sessions']:
+                        if session['available_capacity']>0 and session['min_age_limit']==18:
+                            print('here')
+                            universal_mailer_function('Vaccine Slot Open Now', pincode,center['name'])
+                            break
+                
             
                 #lets not throttle a govt site it hangs by a thread anyways
         time.sleep(300)
