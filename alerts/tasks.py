@@ -37,6 +37,7 @@ def cron_bot():
     
     while True:
         #search upto 2 weeks ahead
+        print(pincodes)
         for pincode in pincodes:
             date1, date2 = get_dates(datetime.now()), get_dates(datetime.now()+timedelta(days=7))
             for date in [date1, date2]:
@@ -46,7 +47,7 @@ def cron_bot():
                     response_json = json.loads(response.text)
                     for center in response_json['centers']:
                         for session in center['sessions']:
-                            if session['available_capacity']>0 and session['min_age_limit']>=18:
+                            if session['available_capacity']>0 and session['min_age_limit']==18:
                                 print('here')
                                 universal_mailer_function('Vaccine Slot Open Now', pincode,center['name'])
                                 break
