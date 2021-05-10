@@ -48,6 +48,7 @@ def cron_bot():
                         headers = headers)
                     response_json = json.loads(response.text)
                     for center in response_json['centers']:
+                        print(center['center_id'])
                         for session in center['sessions']:
                             if session['available_capacity']>0 and session['min_age_limit']==18:
                                 print('here')
